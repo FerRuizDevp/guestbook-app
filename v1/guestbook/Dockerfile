@@ -12,7 +12,7 @@ RUN go build -o guestbook main.go
 
 # Use a lightweight Alpine image for the final container
 FROM alpine:latest
-WORKDIR /root/
+WORKDIR /app
 
 # Copy the built executable
 COPY --from=builder /app/guestbook .
@@ -24,5 +24,11 @@ COPY --from=builder /app/public ./public
 EXPOSE 3000
 
 # Run the Go application
+
+# Make the guestbook binary executable
+RUN chmod +x ./guestbook
+
+# Set the default command
 CMD ["./guestbook"]
+
 
